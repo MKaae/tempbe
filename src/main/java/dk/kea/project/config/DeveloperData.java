@@ -1,23 +1,28 @@
 package dk.kea.project.config;
 
-import dk.kea.project.User.User;
+import dk.kea.project.entity.User;
 import dk.kea.project.repository.UserRepository;
 import dk.kea.security.entity.Role;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Configuration;
 
-import javax.management.relation.RoleUnresolvedList;
-
-public class DeveloperData {
+@Configuration
+public class DeveloperData implements ApplicationRunner {
     UserRepository userRepository;
 
     public DeveloperData(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
 
-    User admin = new User("admin", "admin@admin", "password123", "firstName", "lastName");
-    admin.addRole(Role.USER);
-    userRepository.save(admin);
+    User admin1 = new User("admin", "admin@admin", "password123", "firstName", "lastName");
+    admin1.addRole(Role.ADMIN);
+    userRepository.save(admin1);
 
-    User user = new User("user", "user@user", "password123", "firstName", "lastName");
-    user.addRole(Role.ADMIN);
-    userRepository.save(user);
+    User user1 = new User("user", "user@user", "password123", "firstName", "lastName");
+    user1.addRole(Role.USER);
+    userRepository.save(user1);
+    }
 }
